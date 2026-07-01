@@ -154,7 +154,55 @@ export default function Home() {
   </li>
 </ul>
 </section>
+<section className="mt-12 text-left max-w-3xl mx-auto space-y-6">
 
+  <div>
+    <h2 className="text-2xl font-bold mb-3">
+      手取り計算ツールの使い方
+    </h2>
+    <p>
+      この手取り計算ツールは、額面給与を入力するだけで、
+      税金や社会保険料を差し引いた手取り額の目安を自動計算できる無料ツールです。
+      給与確認や転職時の収入比較にも役立ちます。
+    </p>
+  </div>
+
+  <div>
+    <h2 className="text-2xl font-bold mb-3">
+      こんな人におすすめ
+    </h2>
+    <p>
+      毎月の給与明細を確認したい方、転職前に収入を比較したい方、
+      額面給与から実際に受け取れる金額を知りたい方におすすめです。
+      副業収入のシミュレーションにも使えます。
+    </p>
+  </div>
+
+  <div>
+    <h2 className="text-2xl font-bold mb-3">
+      計算例
+    </h2>
+    <p>
+      例えば月給30万円の場合、税金や社会保険料を差し引くと、
+      実際の手取り額はおよそ24万円前後になることがあります。
+      手取り額を事前に把握することで生活設計に役立ちます。
+    </p>
+  </div>
+
+  <div>
+    <h2 className="text-2xl font-bold mb-3">
+      よくある質問
+    </h2>
+    <p>
+      Q. ボーナスも計算できますか？<br />
+      A. このツールは通常給与をベースにした手取り計算です。<br /><br />
+
+      Q. 正確な税額になりますか？<br />
+      A. 目安計算として利用でき、実際の金額は条件によって異なります。
+    </p>
+  </div>
+
+</section>
 <section className="mt-10 bg-white rounded-xl p-6">
   <p className="text-sm text-gray-700 leading-7">
     このサイトでは、仕事・給与・副業に役立つ無料計算ツールを公開しています。
