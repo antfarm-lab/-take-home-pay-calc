@@ -6,6 +6,9 @@ export const metadata: Metadata = {
 
   description:
     "月収・所得税・社会保険料を入力するだけで給料の手取り額を無料で自動計算できる便利ツールです。",
+    verification: {
+  google: "miCxwdbgRhGe66W37cjiBB0MFNO1tB2WJxh9Dm_zTjc",
+},
 
   keywords: [
     "手取り計算",
