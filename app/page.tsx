@@ -7,6 +7,10 @@ export default function Home() {
   const [tax, setTax] = useState("");
   const [insurance, setInsurance] = useState("");
   const [takeHome, setTakeHome] = useState<number | null>(null);
+const salaryAmount = Number(salary) || 0;
+const taxAmount = salaryAmount * ((Number(tax) || 0) / 100);
+const insuranceAmount =
+  salaryAmount * ((Number(insurance) || 0) / 100);
 
   const calculate = () => {
     const s = Number(salary);
@@ -73,11 +77,33 @@ export default function Home() {
             リセット
           </button>
 
-          {takeHome !== null && (
-            <div className="mt-6 text-lg font-bold">
-              <p>手取り額：¥{takeHome.toLocaleString()}</p>
-            </div>
-          )}
+         {takeHome !== null && (
+  <div className="mt-6 rounded-xl bg-gray-50 p-5">
+    <p className="text-sm text-gray-600">
+      月収 {salaryAmount.toLocaleString()}円
+    </p>
+
+    <p className="mt-4 text-sm text-gray-600">所得税</p>
+    <p className="text-xl font-bold">
+      {Math.round(taxAmount).toLocaleString()}円
+    </p>
+
+    <p className="mt-4 text-sm text-gray-600">社会保険料</p>
+    <p className="text-xl font-bold">
+      {Math.round(insuranceAmount).toLocaleString()}円
+    </p>
+
+    <p className="mt-4 text-sm text-gray-600">控除合計</p>
+    <p className="text-xl font-bold">
+      {Math.round(taxAmount + insuranceAmount).toLocaleString()}円
+    </p>
+
+    <p className="mt-4 text-sm text-gray-600">手取り額</p>
+    <p className="text-3xl font-bold">
+      {Math.round(takeHome).toLocaleString()}円
+    </p>
+  </div>
+)}
 
         </div>
         <section className="mt-10 bg-white rounded-xl p-6">
@@ -160,11 +186,11 @@ export default function Home() {
     <h2 className="text-2xl font-bold mb-3">
       手取り計算ツールの使い方
     </h2>
-    <p>
-      この手取り計算ツールは、額面給与を入力するだけで、
-      税金や社会保険料を差し引いた手取り額の目安を自動計算できる無料ツールです。
-      給与確認や転職時の収入比較にも役立ちます。
-    </p>
+   <p>
+  この手取り計算ツールは、月収・所得税率・社会保険料率を入力すると、
+  税金と社会保険料を差し引いた手取り額の目安を自動計算できる無料ツールです。
+  給与確認や転職時の収入比較にも役立ちます。
+</p>
   </div>
 
   <div>
@@ -188,7 +214,27 @@ export default function Home() {
       手取り額を事前に把握することで生活設計に役立ちます。
     </p>
   </div>
+<div>
+  <h2 className="text-2xl font-bold mb-3">
+    手取り額の計算方法
+  </h2>
 
+  <p className="mb-3">
+    このツールでは、月収から所得税と社会保険料を差し引いて、
+    手取り額の目安を計算しています。
+  </p>
+
+  <ul className="list-disc pl-6 space-y-2">
+    <li>所得税額 ＝ 月収 × 所得税率</li>
+    <li>社会保険料 ＝ 月収 × 社会保険料率</li>
+    <li>手取り額 ＝ 月収 − 所得税額 − 社会保険料</li>
+  </ul>
+
+  <p className="mt-3 text-sm text-gray-600">
+    実際の手取り額は、住民税・各種控除・扶養状況などによって変わります。
+    このツールの計算結果は目安としてご利用ください。
+  </p>
+</div>
   <div>
     <h2 className="text-2xl font-bold mb-3">
       よくある質問
