@@ -46,6 +46,22 @@ const insuranceAmount =
             onChange={(e) => setSalary(e.target.value)}
             className="w-full border p-3 rounded"
           />
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+  {["200000", "250000", "300000", "400000"].map((value) => (
+    <button
+      key={value}
+      type="button"
+      onClick={() => setSalary(value)}
+      className={`rounded-lg border px-3 py-2 text-sm font-bold ${
+        salary === value
+          ? "border-black bg-black text-white"
+          : "border-gray-300 bg-white text-gray-700"
+      }`}
+    >
+      {Number(value).toLocaleString()}円
+    </button>
+  ))}
+</div>
 
           <input
             type="number"
@@ -54,7 +70,22 @@ const insuranceAmount =
             onChange={(e) => setTax(e.target.value)}
             className="w-full border p-3 rounded"
           />
-
+<div className="mt-2 grid grid-cols-3 gap-2">
+  {["5", "10", "15"].map((value) => (
+    <button
+      key={value}
+      type="button"
+      onClick={() => setTax(value)}
+      className={`rounded-lg border px-3 py-2 text-sm font-bold ${
+        tax === value
+          ? "border-black bg-black text-white"
+          : "border-gray-300 bg-white text-gray-700"
+      }`}
+    >
+      {value}%
+    </button>
+  ))}
+</div>
           <input
             type="number"
             placeholder="社会保険料（％）"
@@ -62,7 +93,22 @@ const insuranceAmount =
             onChange={(e) => setInsurance(e.target.value)}
             className="w-full border p-3 rounded"
           />
-
+<div className="mt-2 grid grid-cols-3 gap-2">
+  {["10", "15", "20"].map((value) => (
+    <button
+      key={value}
+      type="button"
+      onClick={() => setInsurance(value)}
+      className={`rounded-lg border px-3 py-2 text-sm font-bold ${
+        insurance === value
+          ? "border-black bg-black text-white"
+          : "border-gray-300 bg-white text-gray-700"
+      }`}
+    >
+      {value}%
+    </button>
+  ))}
+</div>
           <button
             onClick={calculate}
             className="w-full bg-blue-600 text-white p-3 rounded"
@@ -77,35 +123,149 @@ const insuranceAmount =
             リセット
           </button>
 
-         {takeHome !== null && (
-  <div className="mt-6 rounded-xl bg-gray-50 p-5">
-    <p className="text-sm text-gray-600">
-      月収 {salaryAmount.toLocaleString()}円
-    </p>
+        {takeHome !== null && (
+  <div className="mt-6 rounded-xl border bg-gray-50 p-5">
+    <h2 className="mb-4 text-xl font-bold">
+      手取りシミュレーション結果
+    </h2>
 
-    <p className="mt-4 text-sm text-gray-600">所得税</p>
-    <p className="text-xl font-bold">
-      {Math.round(taxAmount).toLocaleString()}円
-    </p>
+    <div className="space-y-3">
+      <div className="flex justify-between">
+        <span className="text-gray-600">月収（額面）</span>
+        <span className="font-bold">
+          {salaryAmount.toLocaleString()}円
+        </span>
+      </div>
 
-    <p className="mt-4 text-sm text-gray-600">社会保険料</p>
-    <p className="text-xl font-bold">
-      {Math.round(insuranceAmount).toLocaleString()}円
-    </p>
+      <div className="flex justify-between">
+        <span className="text-gray-600">
+          所得税（{Number(tax) || 0}%）
+        </span>
+        <span className="font-bold">
+          -{Math.round(taxAmount).toLocaleString()}円
+        </span>
+      </div>
 
-    <p className="mt-4 text-sm text-gray-600">控除合計</p>
-    <p className="text-xl font-bold">
-      {Math.round(taxAmount + insuranceAmount).toLocaleString()}円
-    </p>
+      <div className="flex justify-between">
+        <span className="text-gray-600">
+          社会保険料（{Number(insurance) || 0}%）
+        </span>
+        <span className="font-bold">
+          -{Math.round(insuranceAmount).toLocaleString()}円
+        </span>
+      </div>
 
-    <p className="mt-4 text-sm text-gray-600">手取り額</p>
-    <p className="text-3xl font-bold">
-      {Math.round(takeHome).toLocaleString()}円
+      <div className="flex justify-between border-t pt-3">
+        <span className="font-bold">控除合計</span>
+        <span className="font-bold">
+          -{Math.round(taxAmount + insuranceAmount).toLocaleString()}円
+        </span>
+      </div>
+
+      <div className="mt-4 rounded-xl bg-white p-4 text-center">
+        <p className="text-sm text-gray-600">手取り額の目安</p>
+        <p className="mt-1 text-3xl font-bold text-green-600">
+          {Math.round(takeHome).toLocaleString()}円
+        </p>
+      </div>
+    </div>
+
+    <p className="mt-4 text-xs leading-relaxed text-gray-500">
+      ※簡易シミュレーションです。住民税・扶養・各種控除などは
+      計算に含まれていません。実際の手取り額とは異なる場合があります。
     </p>
   </div>
 )}
 
         </div>
+        <section className="mt-10 rounded-xl border bg-white p-5">
+  <h2 className="text-xl font-bold mb-2">
+    月収別の手取り早見表
+  </h2>
+
+  <p className="mb-4 text-sm text-gray-600">
+    税金・社会保険料などを合計20%として計算した場合の目安です。
+  </p>
+
+  <div className="overflow-x-auto">
+    <table className="w-full border-collapse text-sm">
+      <thead>
+        <tr className="bg-gray-100">
+          <th className="border p-2">月収（額面）</th>
+          <th className="border p-2">控除額の目安</th>
+          <th className="border p-2">手取りの目安</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {[
+          [200000, 40000, 160000],
+          [250000, 50000, 200000],
+          [300000, 60000, 240000],
+          [350000, 70000, 280000],
+          [400000, 80000, 320000],
+          [500000, 100000, 400000],
+        ].map(([salary, deduction, takeHome]) => (
+          <tr key={salary}>
+            <td className="border p-2">
+              {salary.toLocaleString()}円
+            </td>
+            <td className="border p-2">
+              {deduction.toLocaleString()}円
+            </td>
+            <td className="border p-2 font-semibold">
+              {takeHome.toLocaleString()}円
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p className="mt-3 text-xs text-gray-500">
+    ※実際の手取り額は、所得税・住民税・社会保険料・扶養状況などによって異なります。
+  </p>
+</section>
+<section className="mt-10 text-left">
+  <h2 className="text-2xl font-bold mb-3">
+    月収30万円の手取りはいくら？
+  </h2>
+
+  <p className="leading-7">
+    月収30万円でも、30万円すべてを受け取れるわけではありません。
+    給料から所得税や社会保険料などが差し引かれるため、
+    実際の手取り額は額面より少なくなります。
+    例えば控除額を合計20%として計算すると、
+    月収30万円の手取り目安は約24万円です。
+  </p>
+</section>
+<section className="mt-10 text-left">
+  <h2 className="text-2xl font-bold mb-3">
+    額面給与から手取りを計算するには？
+  </h2>
+
+  <p className="leading-7">
+    額面給与とは、税金や社会保険料などが差し引かれる前の給与です。
+    実際に受け取る手取り額を確認するには、
+    額面給与から所得税や社会保険料などの控除額を差し引いて計算します。
+    このツールでは月収と控除率を入力することで、
+    額面から手取りの目安を簡単に計算できます。
+  </p>
+</section>
+<section className="mt-10 text-left">
+  <h2 className="text-2xl font-bold mb-3">
+    給料の手取りは額面の何％くらい？
+  </h2>
+
+  <p className="leading-7">
+    給料の手取り額は、額面給与から所得税や社会保険料などを
+    差し引いた金額です。
+    控除される割合は給与額や条件によって異なるため、
+    額面だけでは実際に受け取れる金額は分かりません。
+    このツールでは所得税率と社会保険料率を自由に設定して、
+    給料の手取り目安を確認できます。
+  </p>
+</section>
         <section className="mt-10 bg-white rounded-xl p-6">
   <h2 className="text-xl font-bold mb-4">
     手取り額を確認することが重要な理由
